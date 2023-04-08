@@ -1,0 +1,30 @@
+import java.util.*;
+
+class RecentlyPlayed {
+    private final int capacity;
+    private final Map<String, Deque<String>> cache;
+
+    public RecentlyPlayed(int capacity) {
+        this.capacity = capacity;
+        this.cache = new HashMap<>();
+    }
+
+    public List<String> getRecentSongs(String user) {
+        Deque<String> songs = cache.get(user);
+        if (songs == null) {
+            return Collections.emptyList();
+        }
+        List<String> result = new ArrayList<>(songs);
+        Collections.reverse(result);
+        return result.subList(0, Math.min(capacity, result.size()));
+    }
+
+    public void addSong(String song, String user) {
+        Deque<String> songs = cache.computeIfAbsent(user, k -> new ArrayDeque<>());
+        songs.remove(song);
+        songs.addFirst(song);
+        if (songs.size() > capacity) {
+            songs.removeLast();
+        }
+    }
+}
