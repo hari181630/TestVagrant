@@ -1,0 +1,42 @@
+package lastTest;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class NewspaperSubscriptions {
+    public static void main(String[] args) {
+        int budget = 10;
+        double toiPrice = 2.5;
+        double hinduPrice = 4;
+        double etPrice = 1.5;
+        double bmPrice = 1.5;
+        double htPrice = 2.5;
+
+        List<String> combinations = getSubscriptionsCombinations(budget, toiPrice, hinduPrice, etPrice, bmPrice, htPrice);
+
+        for (String combination : combinations) {
+            System.out.println(combination);
+        }
+    }
+
+    public static List<String> getSubscriptionsCombinations(int budget, double toiPrice, double hinduPrice, double etPrice, double bmPrice, double htPrice) {
+        List<String> combinations = new ArrayList<>();
+
+        for (int i = 0; i <= budget / toiPrice; i++) {
+            for (int j = 0; j <= budget / hinduPrice; j++) {
+                for (int k = 0; k <= budget / etPrice; k++) {
+                    for (int l = 0; l <= budget / bmPrice; l++) {
+                        for (int m = 0; m <= budget / htPrice; m++) {
+                            if (i * toiPrice + j * hinduPrice + k * etPrice + l * bmPrice + m * htPrice <= budget) {
+                                combinations.add("TOI: " + i + ", Hindu: " + j + ", ET: " + k + ", BM: " + l + ", HT: " + m);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return combinations;
+    }
+}
+
